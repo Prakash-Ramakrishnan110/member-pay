@@ -11,7 +11,8 @@ export async function POST(request: Request) {
     }
 
     // Call the WhatsApp Microservice
-    const response = await fetch(`http://127.0.0.1:3001/api/sessions/${user.id}`, {
+    const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_SERVER_URL || 'http://127.0.0.1:3001';
+    const response = await fetch(`${whatsappUrl}/api/sessions/${user.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
