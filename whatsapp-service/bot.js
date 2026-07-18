@@ -140,7 +140,7 @@ app.post('/api/send-message', async (req, res) => {
 });
 
 // Load existing sessions on startup
-const port = 3001;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`WhatsApp Microservice running on port ${port}`);
   
