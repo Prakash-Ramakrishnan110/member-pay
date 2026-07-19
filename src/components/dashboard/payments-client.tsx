@@ -207,7 +207,7 @@ export function PaymentsClient({
   const handleSendReceipt = async (member: Member, details?: { method: string, transactionId: string }, silent = false) => {
     if (!checkWhatsAppConnection()) return;
     
-    const receiptLink = `${window.location.origin}/receipt/${member.id}`;
+    const receiptLink = `https://memberpay.vercel.app/receipt/${member.id}`;
     
     let text = `Hi ${member.name},
 
@@ -264,7 +264,7 @@ Thank you!`;
     
     // Generate Smart Payment Link if UPI ID is present
     const paymentLink = upiId 
-      ? `${window.location.origin}/pay/${member.id}` 
+      ? `https://memberpay.vercel.app/pay/${member.id}` 
       : '(Please contact us for payment details)';
       
     text = text.replace(/{{name}}/g, member.name);
@@ -595,7 +595,7 @@ Thank you!`;
                                   <DropdownMenuItem disabled={isPending} className="cursor-pointer text-green-600 focus:text-green-600" onClick={() => handleMarkPaidClick(p)}>
                                     <CheckCircle className="mr-2 h-4 w-4" /> Mark as Paid
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem className="cursor-pointer" onClick={() => window.open(`${window.location.origin}/pay/${p.id}`, '_blank')}>
+                                  <DropdownMenuItem className="cursor-pointer" onClick={() => window.open(`https://memberpay.vercel.app/pay/${p.id}`, '_blank')}>
                                     <Smartphone className="mr-2 h-4 w-4" /> View Payment Page
                                   </DropdownMenuItem>
                                 </>
@@ -604,7 +604,7 @@ Thank you!`;
                                   <DropdownMenuItem disabled={isPending} className="cursor-pointer text-green-600 focus:text-green-600" onClick={() => handleMarkPaidClick(p)}>
                                     <CheckCircle className="mr-2 h-4 w-4" /> Mark as Paid
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem className="cursor-pointer" onClick={() => window.open(`${window.location.origin}/pay/${p.id}`, '_blank')}>
+                                  <DropdownMenuItem className="cursor-pointer" onClick={() => window.open(`https://memberpay.vercel.app/pay/${p.id}`, '_blank')}>
                                     <Smartphone className="mr-2 h-4 w-4" /> View Payment Page
                                   </DropdownMenuItem>
                                 </>

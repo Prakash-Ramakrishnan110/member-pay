@@ -82,7 +82,7 @@ export function MembersClient({ initialMembers, plans = [], settings = {} }: { i
         .replace(/{{amount}}/g, member.fee_amount || 0)
         .replace(/{{due_date}}/g, member.next_due_date ? new Date(member.next_due_date).toLocaleDateString() : 'soon')
         .replace(/{{business_name}}/g, settings?.business_name || 'Our Gym')
-        .replace(/{{payment_link}}/g, `${window.location.origin}/pay/${member.id}`)
+        .replace(/{{payment_link}}/g, `https://memberpay.vercel.app/pay/${member.id}`)
         .replace(/{{plan_name}}/g, member.plan_name || 'Membership');
 
       try {
@@ -220,7 +220,7 @@ export function MembersClient({ initialMembers, plans = [], settings = {} }: { i
                                 .replace(/{{amount}}/g, member.fee_amount || 0)
                                 .replace(/{{due_date}}/g, member.next_due_date ? new Date(member.next_due_date).toLocaleDateString() : 'soon')
                                 .replace(/{{business_name}}/g, settings?.business_name || 'Our Gym')
-                                .replace(/{{payment_link}}/g, `${window.location.origin}/pay/${member.id}`)
+                                .replace(/{{payment_link}}/g, `https://memberpay.vercel.app/pay/${member.id}`)
                                 .replace(/{{plan_name}}/g, member.plan_name || 'Membership');
 
                               try {
