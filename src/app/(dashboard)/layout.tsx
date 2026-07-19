@@ -18,9 +18,9 @@ export default async function DashboardGroupRouteLayout({ children }: { children
     .single();
 
   // If the user has not completed onboarding, force them to the onboarding page
-  // if (!business?.business_type) {
-  //   redirect('/onboarding');
-  // }
+  if (!business?.business_type) {
+    redirect('/onboarding');
+  }
 
   // Check 7-day trial limit
   if (business?.subscription_status === 'trial' && business?.created_at) {
