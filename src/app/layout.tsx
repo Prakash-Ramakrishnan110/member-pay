@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   authors: [{ name: "MemberPay" }],
   creator: "MemberPay",
   publisher: "MemberPay",
+  verification: {
+    google: 'google8e575a756c39b615.html',
+  },
   formatDetection: {
     email: false,
     address: false,
