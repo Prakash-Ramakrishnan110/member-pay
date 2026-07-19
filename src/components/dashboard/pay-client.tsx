@@ -36,19 +36,6 @@ export function PayClient({ member, settings }: { member: any, settings: any }) 
         alert(res.error);
       } else {
         setIsSuccess(true);
-        
-        try {
-          await fetch('/api/whatsapp/send', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              phone: member.phone, 
-              message: `Hello ${member.name},\n\nYour payment verification for ${settings.name || 'our gym'} is currently under process.\n\nWe will notify you once it is confirmed.` 
-            })
-          });
-        } catch (e) {
-          console.error("Failed to send verification processing message", e);
-        }
       }
     });
   };

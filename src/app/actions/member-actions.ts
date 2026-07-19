@@ -368,12 +368,11 @@ export async function markAsPaidByStudent(memberId: string, transactionId?: stri
     const supabase = await createClient();
     
     // No auth check because this is called by the student from the public payment link
-    
-    const { data: member } = await supabase
-      .from('members')
-      .select('business_id, next_due_date, billing_cycle, fee_amount')
-      .eq('id', memberId)
-      .single();
+        const { data: member } = await supabase
+        .from('members')
+        .select('business_id, next_due_date, billing_cycle, fee_amount, name, phone, businesses(name)')
+        .eq('id', memberId)
+        .single();
 
     if (!member) return { error: 'Member not found' };
 
@@ -392,6 +391,25 @@ export async function markAsPaidByStudent(memberId: string, transactionId?: stri
 
     revalidatePath('/dashboard');
     revalidatePath('/payments');
+
+    // Send the WhatsApp verification processing message from the server
+    try {
+      const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_SERVER_URL || 'http://127.0.0.1:3001';
+      // @ts-ignore - Supabase type inference for nested objects is sometimes strict
+      const gymName = member.businesses?.name || 'our gym';
+      
+      await fetch(`${whatsappUrl}/api/send-message`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessId: member.business_id,
+          phone: member.phone,
+          message: `Hello ${member.name},\n\nYour payment verification for ${gymName} is currently under process.\n\nWe will notify you once it is confirmed.`
+        }),
+      });
+    } catch (e) {
+      console.error("Failed to send WA message in action", e);
+    }
 
     return { success: true };
   } catch (error) {
