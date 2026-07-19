@@ -35,7 +35,7 @@ export default async function LogsPage() {
   let rawLogs: any[] = [];
   
   if (members) {
-    rawLogs = [...rawLogs, ...members.map(m => ({
+    rawLogs = [...rawLogs, ...members.map((m: any) => ({
       id: `member-${m.id}`,
       type: 'member_added',
       title: 'New Member Added',
@@ -46,7 +46,7 @@ export default async function LogsPage() {
   }
 
   if (businesses) {
-    rawLogs = [...rawLogs, ...businesses.map(b => ({
+    rawLogs = [...rawLogs, ...businesses.map((b: any) => ({
       id: `biz-${b.id}`,
       type: 'business_signup',
       title: 'New Business Registered',
