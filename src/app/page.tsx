@@ -134,11 +134,11 @@ export default function LandingPage() {
                 buttonVariants({
                   variant: 'default',
                   className:
-                    'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 rounded-full px-6 transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 hover:scale-105',
+                    'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 rounded-full px-4 sm:px-6 text-xs sm:text-sm whitespace-nowrap transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 hover:scale-105',
                 })
               )}
             >
-              Start Free Trial <ArrowRight className="ml-1.5 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              Start Free Trial <ArrowRight className="ml-1.5 h-3 w-3 sm:h-4 sm:w-4 group-hover:translate-x-1 transition-transform hidden sm:inline-block" />
             </Link>
           </div>
         </div>
