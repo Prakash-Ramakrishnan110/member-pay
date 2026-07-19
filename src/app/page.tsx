@@ -220,19 +220,19 @@ export default function LandingPage() {
             </div>
 
             {/* Dashboard Content Mockup */}
-            <div className="rounded-xl bg-slate-50 border border-slate-100 p-6 flex flex-col gap-6">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="h-24 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+            <div className="rounded-xl bg-slate-50 border border-slate-100 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                <div className="h-20 sm:h-24 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                   <div className="text-blue-100 text-xs font-medium mb-1">Total Revenue</div>
-                  <div className="text-white text-2xl font-bold">₹1,24,500</div>
+                  <div className="text-white text-xl sm:text-2xl font-bold">₹1,24,500</div>
                 </div>
-                <div className="h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div className="h-20 sm:h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                   <div className="text-slate-500 text-xs font-medium mb-1">Active Members</div>
-                  <div className="text-slate-900 text-2xl font-bold">245</div>
+                  <div className="text-slate-900 text-xl sm:text-2xl font-bold">245</div>
                 </div>
-                <div className="h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div className="h-20 sm:h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                   <div className="text-slate-500 text-xs font-medium mb-1">Pending Payments</div>
-                  <div className="text-slate-900 text-2xl font-bold">₹12,400</div>
+                  <div className="text-slate-900 text-xl sm:text-2xl font-bold">₹12,400</div>
                 </div>
               </div>
 
@@ -276,7 +276,7 @@ export default function LandingPage() {
               scale: { delay: 1, type: 'spring', bounce: 0.5 },
               y: { delay: 1.5, duration: 3, repeat: Infinity, ease: "easeInOut" }
             }}
-            className="absolute -top-6 -right-6 md:-right-10 bg-white rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-4 flex items-center gap-3 z-20"
+            className="absolute -top-12 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:-top-6 sm:-right-6 md:-right-10 bg-white rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-3 sm:p-4 flex items-center gap-3 z-20 whitespace-nowrap"
           >
             <div className="bg-emerald-50 p-2 rounded-full relative">
               <motion.div 
