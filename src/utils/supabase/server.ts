@@ -34,3 +34,20 @@ export async function createClient() {
     }
   )
 }
+
+export function createAdminClient() {
+  const { createClient: createSupabaseClient } = require('@supabase/supabase-js');
+  
+  // If service role key is not available, fallback to anon key (which will be restricted by RLS)
+  // The user MUST add SUPABASE_SERVICE_ROLE_KEY to their Vercel environment variables for this to bypass RLS.
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  )
+}

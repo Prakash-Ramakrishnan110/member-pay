@@ -1,10 +1,10 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, createAdminClient } from '@/utils/supabase/server';
 import { CustomersClient } from '@/components/admin/customers-client';
 
 export const dynamic = 'force-dynamic';
 
 export default async function CustomersPage() {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Fetch all businesses
   const { data: businesses } = await supabase

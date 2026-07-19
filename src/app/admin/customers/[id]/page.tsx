@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, createAdminClient } from '@/utils/supabase/server';
 import { CustomerDetailClient } from '@/components/admin/customer-detail-client';
 import { redirect } from 'next/navigation';
 
@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export default async function CustomerDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const businessId = resolvedParams.id;
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Fetch business info
   const { data: business } = await supabase

@@ -1,19 +1,20 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, createAdminClient } from '@/utils/supabase/server';
 import { AdminClient } from '@/components/admin/admin-client';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
-  const supabase = await createClient();
+  const supabase = await createClient(); // Still need this to check if user is admin if we wanted to
+  const adminSupabase = createAdminClient();
 
-  // Fetch all businesses
-  const { data: businesses } = await supabase
+  // Fetch all businesses (bypassing RLS with admin client)
+  const { data: businesses } = await adminSupabase
     .from('businesses')
     .select('*')
     .order('created_at', { ascending: false });
 
   // Fetch all members across platform to calculate global MRR and logs
-  const { data: members } = await supabase
+  const { data: members } = await adminSupabase
     .from('members')
     .select('id, name, created_at, business_id, status, fee_amount, billing_cycle, businesses(name)');
 

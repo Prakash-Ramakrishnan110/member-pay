@@ -1,10 +1,10 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, createAdminClient } from '@/utils/supabase/server';
 import { RevenueClient } from '@/components/admin/revenue-client';
 
 export const dynamic = 'force-dynamic';
 
 export default async function RevenuePage() {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Fetch all members across platform to calculate global MRR and ARR
   const { data: members } = await supabase

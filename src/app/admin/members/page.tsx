@@ -1,10 +1,10 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, createAdminClient } from '@/utils/supabase/server';
 import { GlobalMembersClient } from '@/components/admin/global-members-client';
 
 export const dynamic = 'force-dynamic';
 
 export default async function GlobalMembersPage() {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Fetch all members
   const { data: members } = await supabase
