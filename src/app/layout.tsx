@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   creator: "MemberPay",
   publisher: "MemberPay",
   verification: {
-    google: 'google8e575a756c39b615.html',
+    google: 'ICapL3GzNBurxiV3DFHfM1A_iNNhPlCBX9NYPibNcuU',
   },
   formatDetection: {
     email: false,
