@@ -28,6 +28,6 @@ export async function POST(request: Request) {
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Error in whatsapp session API route:', error);
-    return NextResponse.json({ success: false, error: 'Cannot reach WhatsApp service. Make sure the Node server is running on port 3001.' }, { status: 500 });
+    return NextResponse.json({ success: false, error: `Connection failed: ${error.message}` }, { status: 500 });
   }
 }

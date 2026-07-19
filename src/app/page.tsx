@@ -22,16 +22,25 @@ import { Logo } from '@/components/ui/logo';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.15 },
   },
+};
+
+const floatAnimation = {
+  y: [0, -10, 0],
+  transition: {
+    duration: 4,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
 };
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
@@ -90,23 +99,25 @@ export default function LandingPage() {
         )}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative z-10">
-          <div className="flex items-center gap-2">
-            <Logo className="h-7 w-7 text-blue-600" />
-            <span className="text-xl font-bold tracking-tight text-slate-900">
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.5 }}>
+              <Logo className="h-7 w-7 text-blue-600" />
+            </motion.div>
+            <span className="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
               Member<span className="text-blue-600">Pay</span>
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <Link href="#features" className="hover:text-blue-600 transition-colors">
+            <Link href="#features" className="hover:text-blue-600 transition-colors hover:-translate-y-0.5 inline-block">
               Features
             </Link>
-            <Link href="#pricing" className="hover:text-blue-600 transition-colors">
+            <Link href="#pricing" className="hover:text-blue-600 transition-colors hover:-translate-y-0.5 inline-block">
               Pricing
             </Link>
-            <Link href="#faq" className="hover:text-blue-600 transition-colors">
+            <Link href="#faq" className="hover:text-blue-600 transition-colors hover:-translate-y-0.5 inline-block">
               FAQ
             </Link>
-            <Link href="#contact" className="hover:text-blue-600 transition-colors">
+            <Link href="#contact" className="hover:text-blue-600 transition-colors hover:-translate-y-0.5 inline-block">
               Contact
             </Link>
           </div>
@@ -123,11 +134,11 @@ export default function LandingPage() {
                 buttonVariants({
                   variant: 'default',
                   className:
-                    'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 rounded-full px-6 transition-all',
+                    'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 rounded-full px-6 transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 hover:scale-105',
                 })
               )}
             >
-              Start Free Trial <ArrowRight className="ml-1.5 h-4 w-4" />
+              Start Free Trial <ArrowRight className="ml-1.5 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -138,7 +149,8 @@ export default function LandingPage() {
         <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="flex flex-col items-center w-full">
           <motion.div
             variants={fadeUp}
-            className="inline-flex items-center bg-blue-50 border border-blue-100 text-blue-700 rounded-full px-4 py-1.5 text-sm font-medium mb-8"
+            whileHover={{ scale: 1.05 }}
+            className="cursor-pointer inline-flex items-center bg-blue-50 border border-blue-100 text-blue-700 rounded-full px-4 py-1.5 text-sm font-medium mb-8 hover:bg-blue-100 transition-colors"
           >
             <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
             MemberPay 2.0 is live
@@ -166,11 +178,11 @@ export default function LandingPage() {
               className={cn(
                 buttonVariants({
                   className:
-                    'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/25 rounded-full px-8 h-12 text-base font-semibold transition-all hover:-translate-y-0.5',
+                    'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/25 rounded-full px-8 h-12 text-base font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-blue-600/40 hover:scale-105 group',
                 })
               )}
             >
-              Start Free Trial <ArrowRight className="ml-1.5 h-4 w-4" />
+              Start Free Trial <ArrowRight className="ml-1.5 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="#features"
@@ -178,7 +190,7 @@ export default function LandingPage() {
                 buttonVariants({
                   variant: 'outline',
                   className:
-                    'rounded-full px-8 h-12 text-base font-semibold border-slate-200 text-slate-700 hover:bg-slate-50 transition-all',
+                    'rounded-full px-8 h-12 text-base font-semibold border-slate-200 text-slate-700 hover:bg-slate-50 transition-all duration-300 hover:-translate-y-1 hover:shadow-md',
                 })
               )}
             >
@@ -189,64 +201,90 @@ export default function LandingPage() {
 
         {/* Product Mockup */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full max-w-4xl relative mt-16"
+          transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full max-w-4xl relative mt-16 group"
         >
-          <div className="relative w-full bg-white rounded-2xl shadow-2xl shadow-slate-900/10 border border-slate-200 p-3 overflow-hidden">
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="relative w-full bg-white rounded-2xl shadow-2xl shadow-slate-900/10 border border-slate-200 p-3 overflow-hidden group-hover:shadow-3xl group-hover:shadow-blue-500/10 transition-shadow duration-500"
+          >
             {/* Fake Browser Header */}
             <div className="flex items-center gap-2 px-3 py-2.5 mb-3">
-              <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-              <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-              <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-              <div className="ml-3 h-6 flex-1 max-w-xs rounded-md bg-slate-50 border border-slate-100"></div>
+              <div className="w-3 h-3 rounded-full bg-slate-200 group-hover:bg-red-400 transition-colors"></div>
+              <div className="w-3 h-3 rounded-full bg-slate-200 group-hover:bg-amber-400 transition-colors delay-75"></div>
+              <div className="w-3 h-3 rounded-full bg-slate-200 group-hover:bg-emerald-400 transition-colors delay-150"></div>
+              <div className="ml-3 h-6 flex-1 max-w-xs rounded-md bg-slate-50 border border-slate-100 group-hover:border-slate-200 transition-colors"></div>
             </div>
 
             {/* Dashboard Content Mockup */}
             <div className="rounded-xl bg-slate-50 border border-slate-100 p-6 flex flex-col gap-6">
               <div className="grid grid-cols-3 gap-4">
-                <div className="h-24 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 p-4 flex flex-col justify-end shadow-sm">
-                  <div className="h-2 w-14 rounded-full bg-white/60 mb-2"></div>
-                  <div className="h-5 w-20 rounded-md bg-white/90"></div>
+                <div className="h-24 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                  <div className="text-blue-100 text-xs font-medium mb-1">Total Revenue</div>
+                  <div className="text-white text-2xl font-bold">₹1,24,500</div>
                 </div>
-                <div className="h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm">
-                  <div className="h-2 w-14 rounded-full bg-slate-200 mb-2"></div>
-                  <div className="h-5 w-20 rounded-md bg-slate-100"></div>
+                <div className="h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                  <div className="text-slate-500 text-xs font-medium mb-1">Active Members</div>
+                  <div className="text-slate-900 text-2xl font-bold">245</div>
                 </div>
-                <div className="h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm">
-                  <div className="h-2 w-14 rounded-full bg-slate-200 mb-2"></div>
-                  <div className="h-5 w-20 rounded-md bg-slate-100"></div>
+                <div className="h-24 rounded-xl bg-white border border-slate-200 p-4 flex flex-col justify-end shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                  <div className="text-slate-500 text-xs font-medium mb-1">Pending Payments</div>
+                  <div className="text-slate-900 text-2xl font-bold">₹12,400</div>
                 </div>
               </div>
 
               <div className="rounded-xl bg-white border border-slate-200 p-4 flex flex-col gap-3 shadow-sm">
-                <div className="h-4 w-32 rounded-md bg-slate-100 mb-1"></div>
-                {[1, 2, 3].map((i) => (
+                <div className="text-sm font-semibold text-slate-800 mb-2">Recent Transactions</div>
+                {[
+                  { name: 'Rahul Sharma', amount: '₹4,500', plan: 'Pro Plan' },
+                  { name: 'Priya Patel', amount: '₹2,000', plan: 'Basic Plan' },
+                  { name: 'Amit Kumar', amount: '₹4,500', plan: 'Pro Plan' },
+                ].map((tx, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between rounded-lg border border-slate-100 p-3"
+                    className="flex items-center justify-between rounded-lg border border-slate-100 p-3 hover:bg-slate-50 hover:border-blue-100 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-100"></div>
-                      <div className="h-3 w-32 rounded-md bg-slate-100"></div>
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-xs">
+                        {tx.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-slate-800">{tx.name}</div>
+                        <div className="text-xs text-slate-500">{tx.plan}</div>
+                      </div>
                     </div>
-                    <div className="h-6 w-16 rounded-full bg-emerald-100"></div>
+                    <div className="text-sm font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">+{tx.amount}</div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Floating Notification */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 1, type: 'spring', bounce: 0.4 }}
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              y: [0, -10, 0],
+            }}
+            transition={{ 
+              opacity: { delay: 1, duration: 0.5 },
+              scale: { delay: 1, type: 'spring', bounce: 0.5 },
+              y: { delay: 1.5, duration: 3, repeat: Infinity, ease: "easeInOut" }
+            }}
             className="absolute -top-6 -right-6 md:-right-10 bg-white rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-4 flex items-center gap-3 z-20"
           >
-            <div className="bg-emerald-50 p-2 rounded-full">
-              <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+            <div className="bg-emerald-50 p-2 rounded-full relative">
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute inset-0 bg-emerald-400 rounded-full opacity-20 blur-sm"
+              />
+              <CheckCircle2 className="w-6 h-6 text-emerald-500 relative z-10" />
             </div>
             <div className="text-left">
               <div className="text-base font-bold text-slate-900">₹4,500 Paid</div>
@@ -263,22 +301,22 @@ export default function LandingPage() {
             Trusted by growing businesses
           </p>
           <div className="flex flex-wrap justify-center gap-x-14 gap-y-6 text-xl font-bold text-slate-400">
-            <span className="flex items-center gap-2 hover:text-slate-600 transition-colors">
-              <Zap className="w-5 h-5" /> PulseFitness
+            <span className="flex items-center gap-2 hover:text-slate-600 hover:scale-105 transition-all cursor-pointer">
+              <Zap className="w-5 h-5 text-amber-400" /> PulseFitness
             </span>
-            <span className="flex items-center gap-2 hover:text-slate-600 transition-colors">
-              <Activity className="w-5 h-5" /> CoreStudio
+            <span className="flex items-center gap-2 hover:text-slate-600 hover:scale-105 transition-all cursor-pointer">
+              <Activity className="w-5 h-5 text-blue-400" /> CoreStudio
             </span>
-            <span className="flex items-center gap-2 hover:text-slate-600 transition-colors">
-              <PieChart className="w-5 h-5" /> ApexTuitions
+            <span className="flex items-center gap-2 hover:text-slate-600 hover:scale-105 transition-all cursor-pointer">
+              <PieChart className="w-5 h-5 text-emerald-400" /> ApexTuitions
             </span>
-            <span className="font-serif italic hover:text-slate-600 transition-colors text-2xl">The Salon</span>
+            <span className="font-serif italic hover:text-slate-600 hover:scale-105 transition-all text-2xl cursor-pointer">The Salon</span>
           </div>
         </div>
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="py-32 relative">
+      <section id="features" className="py-32 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-2xl mb-20">
             <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">Features</span>
@@ -298,13 +336,13 @@ export default function LandingPage() {
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={fadeUp}
-              className="md:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
+              className="group md:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-blue-200 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
             >
-              <div className="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center mb-6">
+              <div className="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-blue-100 transition-all duration-300">
                 <MessageSquare className="h-6 w-6 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Smart Reminders</h3>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Smart Reminders</h3>
                 <p className="text-slate-600 max-w-md leading-relaxed">
                   Automated WhatsApp messages sent before due dates to ensure timely payments and keep your
                   cashflow healthy.
@@ -318,13 +356,13 @@ export default function LandingPage() {
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={fadeUp}
-              className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
+              className="group bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2 hover:border-cyan-200 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
             >
-              <div className="h-12 w-12 rounded-xl bg-cyan-50 flex items-center justify-center mb-6">
+              <div className="h-12 w-12 rounded-xl bg-cyan-50 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-cyan-100 transition-all duration-300">
                 <CreditCard className="h-6 w-6 text-cyan-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Instant Payments</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-cyan-600 transition-colors">Instant Payments</h3>
                 <p className="text-slate-600 leading-relaxed">Accept UPI, cards, and netbanking via Razorpay.</p>
               </div>
             </motion.div>
@@ -335,13 +373,13 @@ export default function LandingPage() {
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={fadeUp}
-              className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
+              className="group bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2 hover:border-emerald-200 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
             >
-              <div className="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-6">
+              <div className="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-emerald-100 transition-all duration-300">
                 <Activity className="h-6 w-6 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Real-time Analytics</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">Real-time Analytics</h3>
                 <p className="text-slate-600 leading-relaxed">Track MRR and churn on a beautiful dashboard.</p>
               </div>
             </motion.div>
@@ -352,17 +390,22 @@ export default function LandingPage() {
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={fadeUp}
-              className="md:col-span-2 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[240px]"
+              className="group md:col-span-2 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between min-h-[240px] relative overflow-hidden"
             >
-              <div className="h-12 w-12 rounded-xl bg-white/15 flex items-center justify-center mb-6">
-                <Sparkles className="h-6 w-6 text-white" />
+              <div className="absolute top-0 right-0 p-8 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-150 transition-transform duration-700">
+                 <Sparkles className="h-48 w-48 text-white" />
               </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-2">Zero Setup Time</h3>
-                <p className="text-blue-50 max-w-md leading-relaxed">
-                  Import your members from Excel and start collecting payments in minutes. No tech knowledge
-                  required.
-                </p>
+              <div className="relative z-10">
+                <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-white/30 transition-all duration-300 backdrop-blur-sm">
+                  <Sparkles className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:translate-x-1 transition-transform">Zero Setup Time</h3>
+                  <p className="text-blue-50 max-w-md leading-relaxed group-hover:text-white transition-colors">
+                    Import your members from Excel and start collecting payments in minutes. No tech knowledge
+                    required.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -370,8 +413,9 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-32 bg-slate-50/50 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="pricing" className="py-32 bg-slate-50/50 border-y border-slate-100 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-20">
             <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">Pricing</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-3 mb-4 tracking-tight">
@@ -383,25 +427,25 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
             {/* Trial */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex flex-col"
+              className="group bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex flex-col hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-2 hover:border-blue-200 transition-all duration-300"
             >
-              <h3 className="text-lg font-bold text-slate-900 mb-1">Free Trial</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">Free Trial</h3>
               <p className="text-slate-500 mb-6 text-sm">Try it risk-free for 7 days.</p>
-              <div className="text-4xl font-extrabold text-slate-900 mb-8">
+              <div className="text-4xl font-extrabold text-slate-900 mb-8 group-hover:scale-105 transform origin-left transition-transform">
                 ₹0<span className="text-base font-medium text-slate-400">/7 days</span>
               </div>
               <ul className="space-y-3 mb-10 flex-1 text-sm text-slate-600">
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-blue-600 shrink-0" /> Manage up to 50 members
+                  <CheckCircle2 className="h-5 w-5 text-slate-300 group-hover:text-blue-600 transition-colors shrink-0" /> Manage up to 50 members
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-blue-600 shrink-0" /> Basic payment tracking
+                  <CheckCircle2 className="h-5 w-5 text-slate-300 group-hover:text-blue-600 transition-colors shrink-0" /> Basic payment tracking
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-blue-600 shrink-0" /> Zero commissions
+                  <CheckCircle2 className="h-5 w-5 text-slate-300 group-hover:text-blue-600 transition-colors shrink-0" /> Zero commissions
                 </li>
               </ul>
               <Link
@@ -409,7 +453,7 @@ export default function LandingPage() {
                 className={cn(
                   buttonVariants({
                     className:
-                      'w-full rounded-full h-12 text-base font-semibold border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition-all',
+                      'w-full rounded-full h-12 text-base font-semibold border border-slate-200 bg-white text-slate-900 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-700 transition-all',
                   })
                 )}
               >
@@ -419,15 +463,15 @@ export default function LandingPage() {
 
             {/* Pro Monthly */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex flex-col"
+              className="group bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex flex-col hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-2 hover:border-blue-200 transition-all duration-300"
             >
-              <h3 className="text-lg font-bold text-slate-900 mb-1">Pro Monthly</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">Pro Monthly</h3>
               <p className="text-slate-500 mb-6 text-sm">For growing businesses.</p>
-              <div className="text-4xl font-extrabold text-slate-900 mb-8">
+              <div className="text-4xl font-extrabold text-slate-900 mb-8 group-hover:scale-105 transform origin-left transition-transform">
                 ₹499<span className="text-base font-medium text-slate-400">/mo</span>
               </div>
               <ul className="space-y-3 mb-10 flex-1 text-sm text-slate-600">
@@ -446,7 +490,7 @@ export default function LandingPage() {
                 className={cn(
                   buttonVariants({
                     className:
-                      'w-full rounded-full h-12 text-base font-semibold border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition-all',
+                      'w-full rounded-full h-12 text-base font-semibold border border-slate-200 bg-white text-slate-900 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all',
                   })
                 )}
               >
@@ -456,18 +500,20 @@ export default function LandingPage() {
 
             {/* Pro Yearly (highlighted) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="relative bg-slate-900 rounded-2xl shadow-xl shadow-slate-900/20 p-8 flex flex-col md:-translate-y-4"
+              className="group relative bg-slate-900 rounded-2xl shadow-2xl shadow-slate-900/20 p-8 flex flex-col md:-translate-y-4 hover:-translate-y-6 hover:shadow-blue-500/20 transition-all duration-300 border border-slate-800 hover:border-blue-500/50"
             >
-              <div className="absolute -top-3 left-8 bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="absolute -top-3 left-8 bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg shadow-blue-500/30">
                 Most popular
               </div>
-              <h3 className="text-lg font-bold text-white mb-1">Pro Yearly</h3>
-              <p className="text-slate-400 mb-6 text-sm">Save ₹989 instantly.</p>
-              <div className="text-4xl font-extrabold text-white mb-8">
+              <h3 className="text-lg font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">Pro Yearly</h3>
+              <p className="text-slate-400 mb-6 text-sm group-hover:text-slate-300 transition-colors">Save ₹989 instantly.</p>
+              <div className="text-4xl font-extrabold text-white mb-8 group-hover:scale-105 transform origin-left transition-transform">
                 ₹4,999<span className="text-base font-medium text-slate-400">/yr</span>
               </div>
               <ul className="space-y-3 mb-10 flex-1 text-sm text-slate-300">
@@ -486,7 +532,7 @@ export default function LandingPage() {
                 className={cn(
                   buttonVariants({
                     className:
-                      'w-full rounded-full h-12 text-base font-semibold bg-white text-slate-900 hover:bg-slate-100 transition-all',
+                      'w-full rounded-full h-12 text-base font-semibold bg-white text-slate-900 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30 transition-all relative z-10',
                   })
                 )}
               >
@@ -506,7 +552,7 @@ export default function LandingPage() {
               Questions? We've got answers.
             </h2>
           </div>
-          <div>
+          <div className="bg-white p-2 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/40">
             <FAQItem
               question="Do you take a percentage of my payments?"
               answer="No! We charge a flat monthly subscription fee. Your members pay you directly via Razorpay, and any standard transaction fees are charged by Razorpay, not us."
@@ -528,8 +574,9 @@ export default function LandingPage() {
       </section>
 
       {/* Contact & Customer Support Section */}
-      <section id="contact" className="py-32 bg-slate-50/50 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="contact" className="py-32 bg-slate-50/50 border-y border-slate-100 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-50/50 to-transparent pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="mb-16 max-w-2xl">
             <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">Contact</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-3 mb-4 tracking-tight">
@@ -537,55 +584,60 @@ export default function LandingPage() {
             </h2>
             <p className="text-lg text-slate-600">Send us a message and our team will get back to you within 24 hours.</p>
           </div>
-
-          <div className="grid lg:grid-cols-2 gap-16">
+          <div className="max-w-2xl mx-auto">
             {/* Contact Form */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 md:p-10">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-8 md:p-10 hover:shadow-2xl hover:shadow-blue-500/5 transition-shadow duration-500"
+            >
               <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
                 <input type="hidden" name="access_key" value="402a86f7-a283-4e94-b95b-70ffccc94339" />
                 <input type="hidden" name="subject" value="New Submission from MemberPay Landing Page" />
                 <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">First name</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-slate-700 group-focus-within:text-blue-600 transition-colors">First name</label>
                     <input
                       type="text"
                       name="First Name"
                       required
-                      className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all"
+                      className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all hover:border-slate-300"
                       placeholder="John"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">Last name</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-slate-700 group-focus-within:text-blue-600 transition-colors">Last name</label>
                     <input
                       type="text"
                       name="Last Name"
                       required
-                      className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all"
+                      className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all hover:border-slate-300"
                       placeholder="Doe"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700">Email address</label>
+                <div className="space-y-2 group">
+                  <label className="text-sm font-medium text-slate-700 group-focus-within:text-blue-600 transition-colors">Email address</label>
                   <input
                     type="email"
                     name="Email"
                     required
-                    className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all"
+                    className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all hover:border-slate-300"
                     placeholder="john@example.com"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700">How can we help?</label>
+                <div className="space-y-2 group">
+                  <label className="text-sm font-medium text-slate-700 group-focus-within:text-blue-600 transition-colors">How can we help?</label>
                   <select
                     name="Inquiry Type"
                     required
-                    className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all text-slate-700 bg-white appearance-none"
+                    className="w-full h-12 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all text-slate-700 bg-white appearance-none hover:border-slate-300 cursor-pointer"
                   >
                     <option value="">Select an option</option>
                     <option value="Sales">Sales &amp; pricing inquiry</option>
@@ -595,86 +647,49 @@ export default function LandingPage() {
                   </select>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700">Message</label>
+                <div className="space-y-2 group">
+                  <label className="text-sm font-medium text-slate-700 group-focus-within:text-blue-600 transition-colors">Message</label>
                   <textarea
                     name="Message"
                     required
-                    className="w-full h-32 rounded-xl border border-slate-200 p-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all resize-none"
+                    className="w-full h-32 rounded-xl border border-slate-200 p-4 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all resize-none hover:border-slate-300"
                     placeholder="Tell us more..."
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base shadow-md shadow-blue-600/20 transition-all hover:-translate-y-0.5"
+                  className="w-full h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base shadow-lg shadow-blue-600/25 transition-all hover:-translate-y-1 hover:shadow-blue-600/40 active:scale-[0.98]"
                 >
                   Send message
                 </button>
               </form>
-            </div>
+            </motion.div>
 
-            {/* Support Info */}
-            <div className="flex flex-col justify-center gap-10">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Customer support</h3>
-                <p className="text-slate-600 leading-relaxed">
-                  Already using MemberPay? We offer dedicated WhatsApp and email support.
-                </p>
-              </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-4 bg-white rounded-xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all">
-                  <div className="p-3 bg-blue-50 rounded-xl shrink-0">
-                    <MessageSquare className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-base font-semibold text-slate-900">Email support</h4>
-                    <p className="text-slate-500 text-sm mt-0.5">support@memberpay.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 bg-white rounded-xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all">
-                  <div className="p-3 bg-cyan-50 rounded-xl shrink-0">
-                    <Smartphone className="w-5 h-5 text-cyan-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-base font-semibold text-slate-900">WhatsApp support</h4>
-                    <p className="text-slate-500 text-sm mt-0.5">Available for Pro plan members.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 bg-white rounded-xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all">
-                  <div className="p-3 bg-emerald-50 rounded-xl shrink-0">
-                    <Globe className="w-5 h-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-base font-semibold text-slate-900">Office</h4>
-                    <p className="text-slate-500 text-sm mt-0.5">Bangalore, India</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-16">
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="bg-slate-900 text-slate-300 py-16 relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
             {/* Brand Info */}
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-2 mb-6">
-                <Logo className="h-6 w-6 text-blue-400" />
-                <span className="text-xl font-bold text-white tracking-tight">
+              <div className="flex items-center gap-2 mb-6 group cursor-pointer">
+                <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.5 }}>
+                  <Logo className="h-6 w-6 text-blue-400" />
+                </motion.div>
+                <span className="text-xl font-bold text-white tracking-tight group-hover:text-blue-400 transition-colors">
                   Member<span className="text-blue-400">Pay</span>
                 </span>
               </div>
               <p className="text-slate-400 leading-relaxed mb-6 max-w-sm">
                 Smart membership and subscription management for growing businesses.
               </p>
-              <div className="flex items-center gap-2 text-sm text-slate-500">
+              <div className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors">
                 <Users className="h-4 w-4" />
                 Built for gyms, studios, academies, and salons.
               </div>
@@ -685,22 +700,22 @@ export default function LandingPage() {
               <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Links</h4>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/" className="hover:text-blue-400 transition-colors">
+                  <Link href="/" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="#features" className="hover:text-blue-400 transition-colors">
+                  <Link href="#features" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Features
                   </Link>
                 </li>
                 <li>
-                  <Link href="#pricing" className="hover:text-blue-400 transition-colors">
+                  <Link href="#pricing" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Pricing
                   </Link>
                 </li>
                 <li>
-                  <Link href="#contact" className="hover:text-blue-400 transition-colors">
+                  <Link href="#contact" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Contact
                   </Link>
                 </li>
@@ -712,22 +727,22 @@ export default function LandingPage() {
               <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Solutions</h4>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="#" className="hover:text-blue-400 transition-colors">
+                  <Link href="#" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Gyms
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-blue-400 transition-colors">
+                  <Link href="#" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Coaching
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-blue-400 transition-colors">
+                  <Link href="#" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Academies
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-blue-400 transition-colors">
+                  <Link href="#" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Salons
                   </Link>
                 </li>
@@ -739,17 +754,17 @@ export default function LandingPage() {
               <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Legal</h4>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="#faq" className="hover:text-blue-400 transition-colors">
+                  <Link href="#faq" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     FAQs
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="hover:text-blue-400 transition-colors">
+                  <Link href="/privacy" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Privacy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="hover:text-blue-400 transition-colors">
+                  <Link href="/terms" className="hover:text-blue-400 hover:translate-x-1 inline-block transition-transform">
                     Terms
                   </Link>
                 </li>

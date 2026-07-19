@@ -136,15 +136,15 @@ export default function AuthPage() {
               ))}
             </div>
             <blockquote className="text-3xl font-medium text-white leading-tight mb-6">
-              &quot;MemberPay completely automated our collections. We recovered ₹80,000 in pending fees in the first week alone using the WhatsApp reminders.&quot;
+              &quot;Switching to MemberPay was the best decision for our studio. Managing memberships and collecting payments has never been this seamless and professional.&quot;
             </blockquote>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-xl font-bold text-white border border-slate-700">
-                RK
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-xl font-bold text-white border border-blue-500 shadow-lg shadow-blue-500/20">
+                AS
               </div>
               <div>
-                <div className="text-white font-semibold">Rahul Kumar</div>
-                <div className="text-slate-400 text-sm">Owner, Iron Core Fitness</div>
+                <div className="text-white font-semibold">Ananya Sharma</div>
+                <div className="text-slate-400 text-sm">Founder, Zen Yoga Studio</div>
               </div>
             </div>
           </motion.div>
@@ -321,10 +321,14 @@ export default function AuthPage() {
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
-                  <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
-                    <Activity className="h-5 w-5" />
-                  </motion.div>
-                  Processing...
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <motion.span 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Authenticating...
+                  </motion.span>
                 </span>
               ) : (
                 <span className="flex items-center gap-2">

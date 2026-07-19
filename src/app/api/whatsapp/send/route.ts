@@ -39,6 +39,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, message: 'Sent successfully' });
   } catch (error: any) {
     console.error('Error in whatsapp API route:', error);
-    return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: `Connection failed: ${error.message}` }, { status: 500 });
   }
 }
