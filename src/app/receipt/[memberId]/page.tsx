@@ -1,10 +1,10 @@
-import { createClient } from '@/utils/supabase/server';
+import { createAdminClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import { ReceiptClient } from '@/components/dashboard/receipt-client';
 
 export default async function ReceiptPage({ params }: { params: Promise<{ memberId: string }> | { memberId: string } }) {
   const resolvedParams = await params;
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Fetch the member
   const { data: member, error: memberError } = await supabase
