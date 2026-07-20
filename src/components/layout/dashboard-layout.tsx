@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Users, CreditCard, Settings, LogOut, Tags, BarChart3, ShieldCheck, Bell, ShieldAlert } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, Settings, LogOut, Tags, BarChart3, ShieldCheck, Bell, ShieldAlert, Megaphone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/client';
 import {
@@ -30,6 +30,7 @@ const navItems = [
   { href: '/payments', label: 'Payments', icon: CreditCard },
   { href: '/plans', label: 'Plans', icon: Tags },
   { href: '/reports', label: 'Reports', icon: BarChart3 },
+  { href: '/announcements', label: 'Announcements', icon: Megaphone },
   { href: '/billing', label: 'Billing', icon: CreditCard },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
