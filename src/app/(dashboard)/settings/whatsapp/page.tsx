@@ -17,6 +17,7 @@ export default async function WhatsAppSettingsPage() {
     <WhatsAppClient 
       businessId={user.id} 
       initialStatus={settings?.whatsapp_session_status || 'disconnected'} 
+      settings={settings || {}}
     />
   );
 }

@@ -9,6 +9,9 @@ interface ReportsClientProps {
     totalRevenueYTD: number;
     newMembersYTD: number;
     avgRevenuePerUser: number;
+    totalMRR?: number;
+    churnCount?: number;
+    upcomingRenewalsCount?: number;
   };
   chartData: {
     month: string;
@@ -77,14 +80,14 @@ export function ReportsClient({ metrics, chartData, members }: ReportsClientProp
       </div>
 
       {/* KPI Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <Card className="border-none shadow-sm ring-1 ring-slate-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-slate-500">Estimated Revenue (YTD)</CardTitle>
+            <CardTitle className="text-sm font-medium text-slate-500">Monthly Recurring Revenue (MRR)</CardTitle>
             <IndianRupee className="h-4 w-4 text-emerald-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-900">₹{metrics.totalRevenueYTD.toLocaleString('en-IN')}</div>
+            <div className="text-3xl font-bold text-slate-900">₹{(metrics.totalMRR || 0).toLocaleString('en-IN')}</div>
             <p className="text-xs text-slate-500 font-medium flex items-center mt-1">
               Based on active member cycles
             </p>
@@ -113,6 +116,32 @@ export function ReportsClient({ metrics, chartData, members }: ReportsClientProp
             <div className="text-3xl font-bold">₹{metrics.avgRevenuePerUser.toLocaleString('en-IN')}</div>
             <p className="text-xs text-slate-400 font-medium mt-1">
               Monthly Recurring Revenue per active member
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-none shadow-sm ring-1 ring-slate-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-slate-500">Upcoming Renewals</CardTitle>
+            <Users className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-slate-900">{metrics.upcomingRenewalsCount || 0}</div>
+            <p className="text-xs text-slate-500 font-medium flex items-center mt-1">
+              Members expiring in 7 days
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-none shadow-sm ring-1 ring-slate-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-slate-500">Churn Rate</CardTitle>
+            <TrendingUp className="h-4 w-4 text-red-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-slate-900">{metrics.churnCount || 0}</div>
+            <p className="text-xs text-slate-500 font-medium mt-1">
+              Inactive members
             </p>
           </CardContent>
         </Card>

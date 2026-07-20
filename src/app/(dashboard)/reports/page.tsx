@@ -104,10 +104,30 @@ export default async function ReportsPage() {
     });
   }
 
+  let churnCount = 0;
+  let upcomingRenewalsCount = 0;
+  const in7Days = new Date();
+  in7Days.setDate(in7Days.getDate() + 7);
+  const now = new Date();
+
+  (members || []).forEach(m => {
+    if (m.status === 'Inactive') {
+      churnCount++;
+    } else if (m.status === 'Active' && m.next_due_date) {
+      const nextDue = new Date(m.next_due_date);
+      if (nextDue >= now && nextDue <= in7Days) {
+        upcomingRenewalsCount++;
+      }
+    }
+  });
+
   const metrics = {
     totalRevenueYTD: Math.round(totalRevenueYTD),
     newMembersYTD,
-    avgRevenuePerUser: Math.round(avgRevenuePerUser)
+    avgRevenuePerUser: Math.round(avgRevenuePerUser),
+    totalMRR: Math.round(totalMRR),
+    churnCount,
+    upcomingRenewalsCount
   };
 
   return (

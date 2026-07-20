@@ -219,6 +219,15 @@ export function AddMemberDialog({ plans = [] }: { plans?: any[] }) {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
+              <Label htmlFor="dob">Date of Birth</Label>
+              <Input 
+                id="dob" 
+                name="dob" 
+                type="date" 
+              />
+            </div>
+            
+            <div className="space-y-2">
               <Label htmlFor="start_date">Start Date</Label>
               <Input 
                 id="start_date" 
@@ -228,18 +237,18 @@ export function AddMemberDialog({ plans = [] }: { plans?: any[] }) {
                 required 
               />
             </div>
-            
-            <div className="space-y-2 flex flex-col justify-end pb-2">
-              <label className="flex items-center space-x-2 cursor-pointer group">
-                <input 
-                  type="checkbox" 
-                  name="is_trial" 
-                  className="rounded border-slate-300 text-blue-600 focus:ring-blue-600 h-4 w-4"
-                />
-                <span className="text-sm font-bold text-slate-700 group-hover:text-blue-700 transition-colors">Start 7-Day Free Trial</span>
-              </label>
-              <p className="text-[10px] text-slate-500 leading-tight">Automatically ends in 7 days without charging.</p>
-            </div>
+          </div>
+
+          <div className="space-y-2 flex flex-col justify-end pb-2 pt-2">
+            <label className="flex items-center space-x-2 cursor-pointer group">
+              <input 
+                type="checkbox" 
+                name="is_trial" 
+                className="rounded border-slate-300 text-blue-600 focus:ring-blue-600 h-4 w-4"
+              />
+              <span className="text-sm font-bold text-slate-700 group-hover:text-blue-700 transition-colors">Start 7-Day Free Trial</span>
+            </label>
+            <p className="text-[10px] text-slate-500 leading-tight">Automatically ends in 7 days without charging.</p>
           </div>
 
           <DialogFooter>

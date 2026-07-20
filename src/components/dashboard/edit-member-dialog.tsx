@@ -108,6 +108,11 @@ export function EditMemberDialog({ member, open, onOpenChange }: { member: any, 
                 </SelectContent>
               </Select>
             </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="dob">Date of Birth</Label>
+              <Input id="dob" name="dob" type="date" defaultValue={member.dob ? member.dob.split('T')[0] : ''} />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">

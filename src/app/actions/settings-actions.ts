@@ -13,7 +13,7 @@ export async function getSettings() {
 
   const { data, error } = await supabase
     .from('businesses')
-    .select('name, city, upi_id, razorpay_account_id, enable_online_payments, enable_whatsapp_click_to_chat, whatsapp_template, whatsapp_session_status')
+    .select('name, city, upi_id, razorpay_account_id, enable_online_payments, enable_whatsapp_click_to_chat, whatsapp_template, whatsapp_session_status, grace_period_days, welcome_template, suspension_template, birthday_template')
     .eq('id', user.id)
     .single();
 

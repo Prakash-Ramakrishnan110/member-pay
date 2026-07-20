@@ -33,6 +33,7 @@ export async function addMember(prevState: unknown, formData: FormData) {
     const start_date = formData.get('start_date') as string;
     const batch_timing = formData.get('batch_timing') as string;
     const working_days = formData.get('working_days') as string;
+    const dob = formData.get('dob') as string;
 
     // Validate inputs
     if (!name || !phone || !plan_name || isNaN(fee_amount) || !billing_cycle || !start_date) {
@@ -95,6 +96,7 @@ export async function addMember(prevState: unknown, formData: FormData) {
         subscription_status: subscription_status,
         batch_timing,
         working_days,
+        dob: dob || null,
         status: 'Active'
       });
 
@@ -107,6 +109,36 @@ export async function addMember(prevState: unknown, formData: FormData) {
       }
       
       return { error: 'Failed to add member to database.' };
+    }
+
+    // Try to send Welcome Message
+    const { data: businessData } = await supabase
+      .from('businesses')
+      .select('name, welcome_template')
+      .eq('id', business.id)
+      .single();
+
+    if (businessData && businessData.welcome_template) {
+      try {
+        let msg = businessData.welcome_template
+          .replace(/{{name}}/g, name)
+          .replace(/{{business_name}}/g, businessData.name || 'our gym')
+          .replace(/{{plan_name}}/g, plan_name)
+          .replace(/{{due_date}}/g, nextDueDateObj.toLocaleDateString());
+
+        const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_SERVER_URL || 'http://127.0.0.1:3001';
+        fetch(`${whatsappUrl}/api/send-message`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            businessId: business.id,
+            phone: phone,
+            message: msg
+          })
+        }).catch(err => console.error("Failed to send welcome message", err));
+      } catch (e) {
+        console.error("Error constructing welcome message", e);
+      }
     }
 
     // Revalidate the dashboard to show the new member instantly
@@ -150,6 +182,7 @@ export async function editMember(prevState: unknown, formData: FormData) {
     const subscription_status = formData.get('subscription_status') as string;
     const batch_timing = formData.get('batch_timing') as string;
     const working_days = formData.get('working_days') as string;
+    const dob = formData.get('dob') as string;
 
     if (!member_id || !name || !phone || !plan_name || isNaN(fee_amount) || !billing_cycle || !plan_start_date || !plan_end_date) {
       return { error: 'Please fill out all required fields correctly.' };
@@ -184,7 +217,8 @@ export async function editMember(prevState: unknown, formData: FormData) {
       start_date: plan_start_date, // Legacy field sync
       next_due_date: plan_end_date, // Legacy field sync
       batch_timing,
-      working_days
+      working_days,
+      dob: dob || null
     };
 
     const { error: updateError } = await supabase

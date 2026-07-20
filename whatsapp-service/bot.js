@@ -41,9 +41,9 @@ async function connectToWhatsApp(businessId, res = null) {
     }
 
     if (connection === 'close') {
-      const statusCode = lastDisconnect.error?.output?.statusCode;
-      // 401 is loggedOut. We should attempt to reconnect on 428 (Connection Closed) and 515 (Restart Required)
-      const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
+      const statusCode = lastDisconnect?.error?.output?.statusCode;
+      // 401 is loggedOut. 440 is connectionReplaced. We should attempt to reconnect on 428 (Connection Closed) and 515 (Restart Required)
+      const shouldReconnect = statusCode !== DisconnectReason.loggedOut && statusCode !== DisconnectReason.connectionReplaced && statusCode !== 440;
       
       console.log(`Connection closed for ${businessId}. Error Code: ${statusCode}. Reconnecting:`, shouldReconnect);
       sessions.delete(businessId);

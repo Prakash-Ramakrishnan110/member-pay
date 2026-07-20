@@ -37,9 +37,13 @@ export default async function DashboardPage() {
   let activeMembersCount = 0;
   let pendingCollections = 0;
   let unpaidMembersCount = 0;
+  let churnCount = 0;
+  let upcomingRenewalsCount = 0;
 
   const today = new Date();
   today.setHours(0,0,0,0);
+  const in7Days = new Date(today);
+  in7Days.setDate(today.getDate() + 7);
 
   members?.forEach(member => {
     // Determine active status from new or old fields
@@ -69,6 +73,15 @@ export default async function DashboardPage() {
       unpaidMembersCount++;
       pendingCollections += (member.fee_amount || 0);
     }
+
+    if (member.status === 'Inactive') {
+      churnCount++;
+    } else if (!isExpired && !isTrial && endDateStr) {
+      const nextDue = new Date(endDateStr);
+      if (nextDue >= today && nextDue <= in7Days) {
+        upcomingRenewalsCount++;
+      }
+    }
   });
 
   const recentMembers = members?.slice(0, 5) || [];
@@ -97,7 +110,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stat Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card className="border-none shadow-sm ring-1 ring-slate-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-500">Total Revenue (Monthly)</CardTitle>
@@ -133,6 +146,32 @@ export default async function DashboardPage() {
             <div className="text-2xl font-bold text-slate-900">₹{pendingCollections.toLocaleString('en-IN')}</div>
             <p className="text-xs text-orange-600 font-medium mt-1">
               From {unpaidMembersCount} unpaid members
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-none shadow-sm ring-1 ring-slate-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-slate-500">Upcoming Renewals</CardTitle>
+            <Activity className="h-4 w-4 text-emerald-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-slate-900">{upcomingRenewalsCount}</div>
+            <p className="text-xs text-emerald-600 font-medium mt-1">
+              Members expiring in 7 days
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-none shadow-sm ring-1 ring-slate-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-slate-500">Churn</CardTitle>
+            <Users className="h-4 w-4 text-red-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-slate-900">{churnCount}</div>
+            <p className="text-xs text-red-600 font-medium mt-1">
+              Inactive members
             </p>
           </CardContent>
         </Card>
