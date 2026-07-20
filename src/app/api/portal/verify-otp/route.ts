@@ -51,7 +51,8 @@ export async function POST(request: Request) {
     
     const token = `${member.id}.${signature}`;
 
-    cookies().set('member_portal_token', token, {
+    const cookieStore = await cookies();
+    cookieStore.set('member_portal_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

@@ -5,7 +5,7 @@ import crypto from 'crypto';
 import { PortalDashboardClient } from '@/components/portal/portal-dashboard-client';
 
 export default async function PortalDashboardPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('member_portal_token')?.value;
 
   if (!token) {
