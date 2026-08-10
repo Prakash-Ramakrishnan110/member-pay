@@ -22,6 +22,9 @@ async function connectToWhatsApp(businessId, res = null) {
     printQRInTerminal: false,
     logger: pino({ level: 'silent' }),
     browser: ['Ubuntu', 'Chrome', '20.0.04'],
+    syncFullHistory: false,
+    markOnlineOnConnect: false,
+    generateHighQualityLinkPreview: false,
   });
 
   sock.ev.on('creds.update', saveCreds);
