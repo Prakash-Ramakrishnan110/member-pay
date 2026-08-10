@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
@@ -10,6 +11,9 @@ export default async function DashboardGroupRouteLayout({ children }: { children
     redirect('/login');
   }
 
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
+
   // Fetch business profile to check onboarding status and trial status
   const { data: business } = await supabase
     .from('businesses')
@@ -18,7 +22,7 @@ export default async function DashboardGroupRouteLayout({ children }: { children
     .single();
 
   // If the user has not completed onboarding, force them to the onboarding page
-  if (!business?.business_type) {
+  if (!business?.business_type && pathname !== '/onboarding') {
     redirect('/onboarding');
   }
 
@@ -27,10 +31,10 @@ export default async function DashboardGroupRouteLayout({ children }: { children
     const trialStartDate = new Date(business.created_at);
     const currentDate = new Date();
     // Calculate difference in days
-    const diffTime = Math.abs(currentDate.getTime() - trialStartDate.getTime());
+    const diffTime = Math.max(0, currentDate.getTime() - trialStartDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
     
-    if (diffDays > 7) {
+    if (diffDays > 7 && pathname !== '/billing') {
       // Trial expired! Redirect to billing
       redirect('/billing');
     }
